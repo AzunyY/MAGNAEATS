@@ -1,3 +1,11 @@
+/*
+* Grupo que desenvolveu o projeto:
+*  - Grupo SO-003
+*
+*  - 53563 Ana Luís
+*  - 55306 João Teixeira
+*  - 56312 Benjamim Gomes
+*/
 #include "stats.h"
 
 /*Funcao que coloca no ficheiro out_file as estatísticas dos vários processos
@@ -80,6 +88,7 @@ void writeRequestStats(FILE* out_file, struct main_data* data){
 
   for(int i = 0; i < data -> max_ops; i++)
   {
+
     char stat = data -> results[i].status;
 
     strConvert(created, data -> results[i].start_time.tv_sec,

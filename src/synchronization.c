@@ -1,3 +1,12 @@
+/*
+* Grupo que desenvolveu o projeto:
+*  - Grupo SO-003
+*
+*  - 53563 Ana Luís
+*  - 55306 João Teixeira
+*  - 56312 Benjamim Gomes
+*/
+
 #include "synchronization.h"
 #include <fcntl.h>
 #include <stdio.h>

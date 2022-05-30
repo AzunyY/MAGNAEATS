@@ -35,8 +35,9 @@ void sinalAlarm() {
   int i;
   for(i = 0; i < data -> max_ops; i++) /*imprime o estado dos pedidos*/
   {
-
+    semaphore_mutex_lock(sems -> results_mutex);
     char stat = data -> results[i].status;
+    semaphore_mutex_unlock(sems -> results_mutex);
 
     if(stat == 'C')
     {

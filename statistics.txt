@@ -1,0 +1,95 @@
+
+ |Process Statistics: 
+
+    Restaurant 0 preared 1 requests! 
+    Restaurant 1 preared 3 requests! 
+    Restaurant 2 preared 0 requests! 
+    Restaurant 3 preared 0 requests! 
+    Restaurant 4 preared 0 requests! 
+    Restaurant 5 preared 0 requests! 
+    Restaurant 6 preared 0 requests! 
+    Restaurant 7 preared 0 requests! 
+    Restaurant 8 preared 0 requests! 
+    Restaurant 9 preared 0 requests! 
+
+
+    Driver 0 delivered 1 requests! 
+    Driver 1 delivered 1 requests! 
+    Driver 2 delivered 1 requests! 
+    Driver 3 delivered 1 requests! 
+    Driver 4 delivered 0 requests! 
+    Driver 5 delivered 0 requests! 
+    Driver 6 delivered 0 requests! 
+    Driver 7 delivered 0 requests! 
+    Driver 8 delivered 0 requests! 
+    Driver 9 delivered 0 requests! 
+
+
+    Client 0 received 2 requests! 
+    Client 1 received 2 requests! 
+    Client 2 received 0 requests! 
+    Client 3 received 0 requests! 
+    Client 4 received 0 requests! 
+    Client 5 received 0 requests! 
+    Client 6 received 0 requests! 
+    Client 7 received 0 requests! 
+    Client 8 received 0 requests! 
+    Client 9 received 0 requests! 
+
+
+ |Request Statistics:
+
+
+    Request: 0
+    Status: C
+    Restaurant id: 0 
+    Driver id: 0
+    Client id: 0
+    Created: 2022-05-30 06:43:07.274  
+    Restaurant time: 2022-05-30 06:43:07.279 
+    Driver time: 2022-05-30 06:43:07.280 
+    Client time (end): 2022-05-30 06:43:07.280 
+    Total time: 0.006
+
+
+
+
+    Request: 1
+    Status: C
+    Restaurant id: 1 
+    Driver id: 1
+    Client id: 0
+    Created: 2022-05-30 06:43:10.953  
+    Restaurant time: 2022-05-30 06:43:10.979 
+    Driver time: 2022-05-30 06:43:10.979 
+    Client time (end): 2022-05-30 06:43:10.997 
+    Total time: 0.044
+
+
+
+
+    Request: 2
+    Status: C
+    Restaurant id: 1 
+    Driver id: 2
+    Client id: 1
+    Created: 2022-05-30 06:43:13.627  
+    Restaurant time: 2022-05-30 06:43:13.652 
+    Driver time: 2022-05-30 06:43:13.652 
+    Client time (end): 2022-05-30 06:43:13.680 
+    Total time: 0.052
+
+
+
+
+    Request: 3
+    Status: C
+    Restaurant id: 1 
+    Driver id: 3
+    Client id: 1
+    Created: 2022-05-30 06:43:33.584  
+    Restaurant time: 2022-05-30 06:43:33.611 
+    Driver time: 2022-05-30 06:43:33.612 
+    Client time (end): 2022-05-30 06:43:33.615 
+    Total time: 0.031
+

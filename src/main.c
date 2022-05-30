@@ -202,14 +202,13 @@ void user_interaction(struct communication_buffers* buffers, struct main_data* d
     }
     else if ( strcmp(command, "help") == 0) /*executa o comando help*/
     {
-
-      printLog(configInfo -> log_out_file, "INVALID COMAND!", -1, -1, -1, NULL); /*coloca no
+      printLog(configInfo -> log_out_file, "help", -1, -1, -1, NULL); /*coloca no
       ficheiro log_out_file o comando inserido*/
       print_help_message();
     }
     else /*comando invalido, imprime mensagem de aviso*/
     {
-      printLog(configInfo -> log_out_file, "stop", -1, -1, -1, NULL);/*coloca no
+      printLog(configInfo -> log_out_file, "INVALID COMAND!", -1, -1, -1, NULL); /*coloca no
       ficheiro log_out_file o comando inserido*/
       print_command_warning("Invalid Command", "Please try again"); /*imprime aviso*/
     }

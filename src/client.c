@@ -10,11 +10,8 @@
 #include "client.h"
 #include "messages-private.h"
 #include "metime.h"
-#include <signal.h>
-#include <unistd.h>
 #include <stdio.h>
 #include <time.h>
-
 
 /* Função principal de um Cliente. Deve executar um ciclo infinito onde em
 * cada iteração lê uma operação da main e se for dirijida ao cliente client_id
@@ -24,69 +21,67 @@
 * portanto deve-se fazer return do o número de operações processadas. Para efetuar
 * estes passos, pode usar os outros métodos auxiliares definidos em client.h.
 */
-int execute_client(int client_id, struct communication_buffers* buffers,
-  struct main_data* data, struct semaphores* sems)
-  {
+int execute_client(int client_id, struct communication_buffers* buffers, struct main_data* data, struct semaphores* sems)
+{
     int n_ops = 0;
     struct operation op;
 
-    signal(SIGINT, SIG_IGN);
-
-    while (1)
+    while ( !*(data->terminate) )
     {
-      client_get_operation(&op, client_id, buffers, data, sems);
+        client_get_operation(&op, client_id, buffers, data, sems);
 
-      if( *(data->terminate) )
-      break;
+        if( *(data->terminate) )
+            break;
 
+        if(op.id != -1)
+        {
+            printf("\n\n %s\n%s%s C#%03d %s #%03d!\n %s\n\n%c ",
+                WARNING_DELIMITER,
+                SPACE, "Client", client_id, "received request", op.id,
+                WARNING_DELIMITER,
+                '>');
+            fflush(stdout);
 
-      if(op.id != -1)
-      {
-        printf("\n\n %s\n%s%s C#%03d %s #%03d!\n %s\n\n%c ",
-        WARNING_DELIMITER,
-        SPACE, "Client", client_id, "received request", op.id,
-        WARNING_DELIMITER,
-        '>');
-        fflush(stdout);
-
-        client_process_operation(&op, client_id, data, &n_ops, sems);
-      }
-     else
-        produce_end(sems -> driv_cli);
-
+            client_process_operation(&op, client_id, data, &n_ops, sems);
+        }
     }
-
     return n_ops;
-  }
+}
 
 
-  /* Função que lê uma operação do buffer de memória partilhada entre os motoristas
-  * e clientes que seja direcionada a client_id. Antes de tentar ler a operação, deve
-  * verificar se data->terminate tem valor 1. Em caso afirmativo, retorna imediatamente da função.
-  */
-  void client_get_operation(struct operation* op, int client_id, struct communication_buffers* buffers, struct main_data* data, struct semaphores* sems)
-  {
-    if( *(data->terminate) )
-      return;
-
-    consume_begin(sems -> driv_cli); //o processo espera que haja dados para ler
+/* Função que lê uma operação do buffer de memória partilhada entre os motoristas
+* e clientes que seja direcionada a client_id. Antes de tentar ler a operação, deve
+* verificar se data->terminate tem valor 1. Em caso afirmativo, retorna imediatamente da função.
+*/
+void client_get_operation(struct operation* op, int client_id, struct communication_buffers* buffers, struct main_data* data, struct semaphores* sems)
+{
+    consume_begin(sems->driv_cli);
     read_driver_client_buffer(buffers->driv_cli, client_id, data->buffers_size, op);
+    if(op->id == -1)
+    {
+        produce_end(sems->driv_cli);
+    }
+    else
+    {
+        consume_end(sems->driv_cli);
+    }
+}
 
-  }
 
-
-  /* Função que processa uma operação, alterando o seu campo receiving_client para o id
-  * passado como argumento, alterando o estado da mesma para 'C' (client), e
-  * incrementando o contador de operações. Atualiza também a operação na estrutura data.
-  */
-  void client_process_operation(struct operation* op, int client_id, struct main_data* data, int* counter, struct semaphores* sems)
-  {
+/* Função que processa uma operação, alterando o seu campo receiving_client para o id
+* passado como argumento, alterando o estado da mesma para 'C' (client), e
+* incrementando o contador de operações. Atualiza também a operação na estrutura data.
+*/
+void client_process_operation(struct operation* op, int client_id, struct main_data* data, int* counter, struct semaphores* sems)
+{
     op->status = 'C';
     op->receiving_client = client_id;
     op->client_end_time = getTimeCLock();
+
     semaphore_mutex_lock(sems->results_mutex);
     data->results[op->id] = *op;
     semaphore_mutex_unlock(sems->results_mutex);
+
     (*counter)++;
-    consume_end(sems -> driv_cli); // o processo notifica o produtor que acabou de ler, i.e., tem uma slot vazio
-  }
+
+}
